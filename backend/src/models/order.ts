@@ -67,9 +67,6 @@ const orderSchema: Schema = new Schema(
         comment: {
             type: String,
             default: '',
-            validate: {
-                validator: (v: string) => validator.escape(v?.toString() || ''),
-            },
         },
     },
     { versionKey: false, timestamps: true }
