@@ -17,7 +17,7 @@ export const uploadFile = async (
             ? `/${process.env.UPLOAD_PATH}/${uuidv4() + path.extname(req.file.originalname)}`
             : `/${uuidv4() + path.extname(req.file.originalname)}`
         return res.status(constants.HTTP_STATUS_CREATED).send({
-            //fileName,
+            fileName,
             originalName: req.file?.originalname,
         })
     } catch (error) {
