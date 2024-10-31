@@ -13,7 +13,6 @@ import rateLimit from 'express-rate-limit'
 
 const { PORT = 3000 } = process.env
 const app = express()
-
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000,
     limit: 100,
@@ -23,14 +22,11 @@ const limiter = rateLimit({
 
 app.use(cookieParser())
 app.use(cors({ origin: process.env.ORIGIN_ALLOW, credentials: true }))
-// app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(serveStatic(path.join(__dirname, 'public')))
-
 app.use(urlencoded({ extended: true }))
-app.use(json())
+app.use(json({ limit: '10kb' }))
 
-//app.options('*', cors())
 app.use(routes)
 app.use(errors())
 app.use(errorHandler)
