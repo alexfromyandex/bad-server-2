@@ -14,8 +14,8 @@ import rateLimit from 'express-rate-limit'
 const { PORT = 3000 } = process.env
 const app = express()
 const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000,
-    limit: 100,
+    windowMs: 5 * 60 * 1000,
+    limit: 10,
     standardHeaders: true,
     legacyHeaders: false,
 })
