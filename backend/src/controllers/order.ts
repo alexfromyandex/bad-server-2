@@ -310,7 +310,7 @@ export const createOrder = async (
             return next(new BadRequestError('Неверная сумма заказа'))
         }
 
-        const validateComment = comment ? validator.escape(String(comment)) : '';
+        const validateComment = comment ? validator.escape(String(comment)) : ''
 
         const newOrder = new Order({
             totalAmount: total,

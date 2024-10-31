@@ -37,6 +37,7 @@ export const validateOrderBody = celebrate({
         }),
         phone: Joi.string().max(16).required().pattern(phoneRegExp).messages({
             'string.empty': 'Не указан телефон',
+            'string.max': 'Слишком длинный номер телефона',
         }),
         address: Joi.string().required().messages({
             'string.empty': 'Не указан адрес',
@@ -47,22 +48,6 @@ export const validateOrderBody = celebrate({
         comment: Joi.string().optional().allow(''),
     }),
 })
-/*
-
-function async validateUserByEmail(email) {
- // Отсекаем слишком длинные строки
-if (email.length > 64) {
-   throw new Error('Email is too long');
- }
-
-// Теперь не перегрузим нашу регулярку
-if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
-   throw new Error('Invalid email');
- }
-
-*/
-
-
 
 // валидация товара.
 // name и link - обязательные поля, name - от 2 до 30 символов, link - валидный url
