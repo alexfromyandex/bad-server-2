@@ -12,7 +12,7 @@ export const uploadFile = async (
     }
     try {
         return res.status(constants.HTTP_STATUS_CREATED).send(
-            `Saved ${req.file?.originalname} in DB`
+            `Saved ${req.file?.originalname} in DB`,
         )
     } catch (error) {
         return next(error)
