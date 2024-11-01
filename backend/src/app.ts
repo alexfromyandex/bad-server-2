@@ -13,12 +13,12 @@ import rateLimit from 'express-rate-limit'
 
 const { PORT = 3000 } = process.env
 const app = express()
-const limiter = rateLimit({
+/*const limiter = rateLimit({
     windowMs: 5 * 60 * 1000,
     limit: 10,
     standardHeaders: true,
     legacyHeaders: false,
-})
+})*/
 
 app.use(cookieParser())
 app.use(cors({ origin: process.env.ORIGIN_ALLOW, credentials: true }))
@@ -30,7 +30,7 @@ app.use(json({ limit: '10kb' }))
 app.use(routes)
 app.use(errors())
 app.use(errorHandler)
-app.use(limiter)
+//app.use(limiter)
 
 // eslint-disable-next-line no-console
 const bootstrap = async () => {
