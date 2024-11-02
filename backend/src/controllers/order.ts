@@ -29,9 +29,9 @@ export const getOrders = async (
             search,
         } = req.query
 
-        const getNormalizeLimit = (limit: number) => {
+        const getNormalizeLimit = (limit: number) => 
             limit >= 10 ? 10 : limit
-        }
+        
         const normLimit = getNormalizeLimit(Number(limit))
         const filters: FilterQuery<Partial<IOrder>> = {}
 
@@ -162,9 +162,8 @@ export const getOrdersCurrentUser = async (
     try {
         const userId = res.locals.user._id
         const { search, page = 1, limit = 5 } = req.query
-        const getNormalizeLimit = (limit: number) => {
-            limit >= 5 ? 5 : limit
-        }
+        const getNormalizeLimit = (limit: number) => 
+            limit >= 5 ? 5 : limit       
         const normLimit = getNormalizeLimit(Number(limit))
         const options = {
             skip: (Number(page) - 1) * Number(normLimit),
