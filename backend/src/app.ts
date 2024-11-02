@@ -14,13 +14,12 @@ import { rateLimit } from 'express-rate-limit'
 const { PORT = 3000 } = process.env
 const app = express()
 const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000,
-    limit: 100,
-    //standardHeaders: true,
-    //legacyHeaders: false,
+    windowMs: 60 * 1000,
+    limit: 10,
+    standardHeaders: true,
+    legacyHeaders: false,
 })
 
-app.use(limiter)
 app.use(cookieParser())
 app.use(cors({ origin: process.env.ORIGIN_ALLOW, credentials: true }))
 app.use(serveStatic(path.join(__dirname, 'public')))
@@ -33,6 +32,7 @@ app.use(errorHandler)
 const bootstrap = async () => {
     try {
         await mongoose.connect(DB_ADDRESS)
+        app.use(limiter)
         await app.listen(PORT, () => console.log('ok'))
     } catch (error) {
         console.error(error)
