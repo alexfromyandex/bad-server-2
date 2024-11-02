@@ -118,7 +118,7 @@ export const getOrders = async (
         if (sortField && sortOrder) {
             sort[sortField as string] = sortOrder === 'desc' ? -1 : 1
         }
-
+        //исправить агрегацию
         aggregatePipeline.push(
             { $sort: sort },
             { $skip: (Number(page) - 1) * Number(normLimit) },
@@ -136,7 +136,11 @@ export const getOrders = async (
             }
         )
 
+
+        //исправить агрегацию   
         const orders = await Order.aggregate(aggregatePipeline)
+
+
         const totalOrders = await Order.countDocuments(filters)
         const totalPages = Math.ceil(totalOrders / Number(normLimit))
 

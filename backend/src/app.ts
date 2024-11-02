@@ -9,35 +9,31 @@ import { DB_ADDRESS } from './config'
 import errorHandler from './middlewares/error-handler'
 import serveStatic from './middlewares/serverStatic'
 import routes from './routes'
-import rateLimit from 'express-rate-limit'
+import { rateLimit } from 'express-rate-limit'
 
 const { PORT = 3000 } = process.env
 const app = express()
 const limiter = rateLimit({
-    windowMs: 5 * 60 * 1000,
-    limit: 10,
-    standardHeaders: true,
-    legacyHeaders: false,
+    windowMs: 15 * 60 * 1000,
+    limit: 100,
+    //standardHeaders: true,
+    //legacyHeaders: false,
 })
 
+app.use(limiter)
 app.use(cookieParser())
 app.use(cors({ origin: process.env.ORIGIN_ALLOW, credentials: true }))
-
 app.use(serveStatic(path.join(__dirname, 'public')))
 app.use(urlencoded({ extended: true }))
 app.use(json({ limit: '10kb' }))
-
 app.use(routes)
 app.use(errors())
 app.use(errorHandler)
 
-
-// eslint-disable-next-line no-console
 const bootstrap = async () => {
     try {
         await mongoose.connect(DB_ADDRESS)
         await app.listen(PORT, () => console.log('ok'))
-        app.use(limiter)
     } catch (error) {
         console.error(error)
     }
