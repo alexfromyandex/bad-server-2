@@ -19,6 +19,7 @@ const limiter = rateLimit({
     limit: 100,
     standardHeaders: true,
     legacyHeaders: false,
+    validate: {xForwardedForHeader: false}
 })
 
 app.use(cookieParser())
