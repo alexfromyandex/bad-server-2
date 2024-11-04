@@ -11,7 +11,6 @@ import errorHandler from './middlewares/error-handler'
 import serveStatic from './middlewares/serverStatic'
 import routes from './routes'
 
-
 const { PORT = 3000 } = process.env
 const app = express()
 const limiter = rateLimit({
@@ -25,8 +24,8 @@ const limiter = rateLimit({
 app.use(cookieParser())
 app.use(cors({ origin: process.env.ORIGIN_ALLOW, credentials: true }))
 app.use(serveStatic(path.join(__dirname, 'public')))
-app.use(urlencoded({ extended: true }))
 app.use(json({ limit: '10kb' }))
+app.use(urlencoded({ extended: true }))
 app.use(limiter)
 app.use(routes)
 app.use(errors())
