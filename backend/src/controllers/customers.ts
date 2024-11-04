@@ -29,10 +29,9 @@ export const getCustomers = async (
             search,
         } = req.query
 
-        const getNormalizeLimit = (limit: number) =>
-            limit >= 10 ? 10 : limit
-          
-        const normLimit = getNormalizeLimit(Number(limit))   
+        const getNormalizeLimit = (n: number) => (n >= 10 ? 10 : n)
+
+        const normLimit = getNormalizeLimit(Number(limit))
         const filters: FilterQuery<Partial<IUser>> = {}
 
         if (registrationDateFrom) {

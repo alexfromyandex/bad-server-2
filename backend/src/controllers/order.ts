@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from 'express'
 import { FilterQuery, Error as MongooseError, Types } from 'mongoose'
+import validator from 'validator'
 import BadRequestError from '../errors/bad-request-error'
 import NotFoundError from '../errors/not-found-error'
 import Order, { IOrder } from '../models/order'
 import Product, { IProduct } from '../models/product'
 import User from '../models/user'
-import validator from 'validator'
 
 // eslint-disable-next-line max-len
 // GET /orders?page=2&limit=5&sort=totalAmount&order=desc&orderDateFrom=2024-07-01&orderDateTo=2024-08-01&status=delivering&totalAmountFrom=100&totalAmountTo=1000&search=%2B1
@@ -29,9 +29,8 @@ export const getOrders = async (
             search,
         } = req.query
 
-        const getNormalizeLimit = (limit: number) => 
-            limit >= 10 ? 10 : limit
-        
+        const getNormalizeLimit = (n: number) => (n >= 10 ? 10 : n)
+
         const normLimit = getNormalizeLimit(Number(limit))
         const filters: FilterQuery<Partial<IOrder>> = {}
 
@@ -118,7 +117,7 @@ export const getOrders = async (
         if (sortField && sortOrder) {
             sort[sortField as string] = sortOrder === 'desc' ? -1 : 1
         }
-        //исправить агрегацию
+
         aggregatePipeline.push(
             { $sort: sort },
             { $skip: (Number(page) - 1) * Number(normLimit) },
@@ -136,10 +135,7 @@ export const getOrders = async (
             }
         )
 
-
-        //исправить агрегацию   
         const orders = await Order.aggregate(aggregatePipeline)
-
 
         const totalOrders = await Order.countDocuments(filters)
         const totalPages = Math.ceil(totalOrders / Number(normLimit))
@@ -166,8 +162,7 @@ export const getOrdersCurrentUser = async (
     try {
         const userId = res.locals.user._id
         const { search, page = 1, limit = 5 } = req.query
-        const getNormalizeLimit = (limit: number) => 
-            limit >= 5 ? 5 : limit       
+        const getNormalizeLimit = (n: number) => (n >= 5 ? 5 : n)
         const normLimit = getNormalizeLimit(Number(limit))
         const options = {
             skip: (Number(page) - 1) * Number(normLimit),
