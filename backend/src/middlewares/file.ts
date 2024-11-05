@@ -1,6 +1,6 @@
 import { Express, Request } from 'express'
 import multer, { FileFilterCallback } from 'multer'
-import path, { join } from 'path'
+import path, { join, extname } from 'path'
 import { v4 as uuidv4 } from 'uuid'
 import uniqueSlug from 'unique-slug'
 
@@ -29,7 +29,7 @@ const storage = multer.diskStorage({
         file: Express.Multer.File,
         cb: FileNameCallback
     ) => {
-        cb(null, `${uniqueSlug(new Date().toUTCString())}${path.extname(file.originalname)}`)
+        cb(null, `${uniqueSlug(new Date().toUTCString())}${extname(file.originalname)}`)
     },
 })
 
