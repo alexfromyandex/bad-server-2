@@ -14,8 +14,8 @@ import routes from './routes'
 const { PORT = 3000 } = process.env
 const app = express()
 const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000,
-    limit: 100,
+    windowMs: 1 * 60 * 1000,
+    limit: 40,
     standardHeaders: true,
     legacyHeaders: false,
     validate: {xForwardedForHeader: false}
