@@ -24,7 +24,7 @@ const limiter = rateLimit({
 app.use(cookieParser())
 app.use(cors({ origin: process.env.ORIGIN_ALLOW, credentials: true }))
 app.use(serveStatic(path.join(__dirname, 'public')))
-app.use(json({ limit: '10kb' }))
+app.use(json({ limit: '50kb' }))
 app.use(urlencoded({ extended: true }))
 app.use(limiter)
 app.use(routes)
