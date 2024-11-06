@@ -6,3 +6,4 @@ const uploadRouter = Router()
 uploadRouter.post('/', fileMiddleware.single('file'), uploadFile)
 
 export default uploadRouter
+
