@@ -14,3 +14,6 @@ docker compose up -d
 
 [Ссылка на репозиторий Git](https://github.com/NikolaJJMusatov/bad-server.git)
 Николай, Фулстек-разработчик, wff-cohort-3
+
+
+test
